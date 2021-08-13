@@ -1,11 +1,8 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
 
 
 class UserSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    username = serializers.CharField()
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
-    password = serializers.CharField(write_only=True)
-    is_staff = serializers.BooleanField(required=False)
-    is_superuser = serializers.BooleanField(required=False)
+    class Meta:
+        model = User
+        fields = '__all__'
