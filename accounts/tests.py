@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 
 class UserModelTest(TestCase):
     def user_admin(self):
-        return User.objects.create(username="admin", first_name="first_name", last_name="last_name", password="123abc$", is_staff=True, is_superuser=True)
+        return User.objects.create(username="admin", first_name="first_name", last_name="last_name", password="1234abc$", is_staff=True, is_superuser=True)
 
     def user_critic(self):
-        return User.objects.create(username="critic", first_name="first_name", last_name="last_name", password="123abc$", is_staff=True, is_superuser=False)
+        return User.objects.create(username="critic", first_name="first_name", last_name="last_name", password="1234abc$", is_staff=True, is_superuser=False)
 
     def test_create_admin_success(self):
         admin = self.user_admin()
