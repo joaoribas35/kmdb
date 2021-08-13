@@ -7,7 +7,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 
-from accounts.serializers import UserSerializer
+from accounts.serializers import UserSerializer, UserLoginSerializer
+
+import ipdb
 
 
 class UserView(APIView):
@@ -44,7 +46,7 @@ class UserView(APIView):
 
 class LoginView(APIView):
     def post(self, request):
-        serializer = UserSerializer(data=request.data)
+        serializer = UserLoginSerializer(data=request.data)
 
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
