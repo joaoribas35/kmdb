@@ -23,4 +23,5 @@ class Review(models.Model):
     start = models.IntegerField()
     review = models.TextField()
     spoilers = models.BooleanField()
-    movie = models.IntegerField()
+    movie = models.ForeignKey(
+        Movie, on_delete=CASCADE, related_name="reviews")
