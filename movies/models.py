@@ -6,15 +6,14 @@ from django.contrib.auth.models import User
 class Movie(models.Model):
     title = models.CharField(max_length=255)
     duration = models.CharField(max_length=255)
-    premiere = models.DateTimeField()
+    premiere = models.DateField()
     classification = models.IntegerField()
     synopsis = models.TextField()
 
 
 class Genre(models.Model):
     name = models.CharField(max_length=255)
-    movie = models.ForeignKey(
-        Movie, on_delete=CASCADE, related_name="genres")
+    movies = models.ManyToManyField(Movie, related_name="genres")
 
 
 class Review(models.Model):
