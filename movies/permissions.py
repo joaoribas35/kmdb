@@ -20,13 +20,9 @@ class MoviePermissions(BasePermission):
             return True if user == 'admin' else False
 
 
-class ReviewPermissions(BasePermission):
+class ReviewDetailPermissions(BasePermission):
     def has_permission(self, request, view):
         user = user_type(request.user)
 
-        if request.method == 'GET':
-            return True
-
-        if request.method == 'POST':
-            # return True if user == 'critic' else False
-            return True
+        if request.method == 'POST' or request.method == 'PUT':
+            return True if user == 'critic' else False

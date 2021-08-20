@@ -13,13 +13,14 @@ class Movie(models.Model):
 
 class Genre(models.Model):
     name = models.CharField(max_length=255)
-    movies = models.ManyToManyField(Movie, related_name="genres")
+    movies = models.ManyToManyField(
+        Movie, related_name="genres")
 
 
 class Review(models.Model):
     critic = models.ForeignKey(
         User, on_delete=CASCADE)
-    start = models.IntegerField()
+    stars = models.IntegerField()
     review = models.TextField()
     spoilers = models.BooleanField()
     movie = models.ForeignKey(
