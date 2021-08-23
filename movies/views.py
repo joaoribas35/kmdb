@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
-# from rest_framework.mixins import FiledLookUpMixin
+from .mixins import MultipleFieldLookupMixin
 
 
 from .models import Movie, Review
@@ -15,7 +15,7 @@ from .permissions import MoviePermissions, ReviewDetailPermissions
 import ipdb
 
 
-class MovieView(ListCreateAPIView):
+class MovieView(MultipleFieldLookupMixin, ListCreateAPIView):
 
     authentication_classes = [TokenAuthentication]
     permission_classes = [MoviePermissions]
@@ -23,7 +23,7 @@ class MovieView(ListCreateAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
 
-    lookup_field = ['title']
+    lookup_fields = ['title']
 
 
 class MovieDetailView(RetrieveDestroyAPIView):
