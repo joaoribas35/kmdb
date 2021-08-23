@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
+# from rest_framework.mixins import FiledLookUpMixin
 
 
 from .models import Movie, Review
@@ -21,6 +22,8 @@ class MovieView(ListCreateAPIView):
 
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
+
+    lookup_field = ['title']
 
 
 class MovieDetailView(RetrieveDestroyAPIView):
@@ -81,7 +84,7 @@ class ReviewDetailView(CreateAPIView, UpdateAPIView):
         user = request.user
         movie_id = kwargs['movie_id']
         movie = get_object_or_404(Movie, id=movie_id)
-        review = movie.reviews.get(critic_id=user.id)
+        review = get_object_or_404(Review, critic_id=user.id)
 
         partial = kwargs.pop('partial', False)
         instance = review

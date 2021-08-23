@@ -20,24 +20,9 @@ class UserView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         if User.objects.filter(username=serializer.validated_data['username']).exists():
-            return Response({'error': 'username already exists'}, status=status.HTTP_409_CONFLICT)
+            return Response({'error': 'email already exists'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-        user = User(**serializer.validated_data)
-
-        password = serializer.validated_data['password']
-
-        try:
-            validate_password(password, user)
-        except ValidationError as e:
-            errors = {}
-
-            for arg in e.args[0]:
-                errors[arg.code] = arg.messages[0]
-
-            return Response(errors, status=status.HTTP_400_BAD_REQUEST)
-
-        user.set_password(password)
-        user.save()
+        user = User.objects.create_user(**serializer.validated_data)
 
         serializer = UserSerializer(user)
 
